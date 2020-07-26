@@ -19,41 +19,46 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-// Java 설정을 사용하는 경우
-// @ContextConfiguration(classes= {RootConfig.class})
+//Java ������ ����ϴ� ��� 
+//@ContextConfiguration(classes= {RootConfig.class})
 @Log4j
-public class DataSourceTests
-{
-	@Setter(onMethod_ = { @Autowired})
-		private DataSource dataSource;
+public class DataSourceTests {
 
-	@Setter(onMethod_ = { @Autowired})
-	private SqlSessionFactory sqlSessionFactory;
+  @Setter(onMethod_ = { @Autowired })
+  private DataSource dataSource;
 
-	@Test
-	public void testMyBatis()
-	{
-		try(SqlSession session = sqlSessionFactory.openSession(); Connection con = session.getConnection();)
-		{
-			log.info(session);
-			log.info(con);
-		}
-		catch(Exception e)
-		{
-			fail(e.getMessage());
-		}
-	}
+  @Setter(onMethod_ = { @Autowired })
+  private SqlSessionFactory sqlSessionFactory;
 
-		@Test
-		public void testConnection()
-		{
-			try(Connection con = dataSource.getConnection())
-			{
-				log.info(con);
-			}
-			catch(Exception e)
-			{
-				fail(e.getMessage());
-			}
-		}
+  @Test
+  public void testMyBatis() {
+
+    try (SqlSession session = sqlSessionFactory.openSession();
+       Connection con = session.getConnection();
+      ) {
+
+      log.info(session);
+      log.info(con);
+
+    } catch (Exception e) {
+      fail(e.getMessage());
+    }
+
+  }
+
+
+  @Test
+  public void testConnection() {
+    
+    
+    try (Connection con = dataSource.getConnection()){
+
+      log.info(con);      
+      
+    }catch(Exception e) {
+      fail(e.getMessage());
+    }
+  }
 }
+
+
